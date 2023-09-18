@@ -1,0 +1,6 @@
+---
+title: "p8105_hw1_sw3879"
+author: "Siqing Wang"
+date: "2023-09-18"
+output: github_document
+---
