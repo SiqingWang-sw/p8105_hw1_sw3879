@@ -5,25 +5,29 @@ date: "2023-09-18"
 output: github_document
 ---
 ## Problem 1
-```{r}
+
+Importing the moderndive tidyverse library 
+
+```{r loading libraries and data file}
 library(moderndive)
 data("early_january_weather")
 library(tidyverse)
 ```
-The early January weather dataset contains `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns, encompassing time- and location-specific weather information regarding temperature, wind, humidity, precipitation, pressure, and visibility.
-
-missing data?
+The early January weather dataset contains `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns. 
+This dataset contains the following variables: `r names(early_january_weather)`
+By viewing this dataset, there are missing values in the wind_gust and pressure column that might impact later analyses. 
 
 The mean temperature is `r mean(pull(early_january_weather, temp))` #round this 
 
-```{r}
+```{r plotting}
 library(ggplot2)
-ggplot(early_january_weather, aes(x = hour, y = temp, color = humid)) + geom_point()
-#ggsave
+ggplot(early_january_weather, aes(x = hour, y = temp, color = humid)) + geom_point() + labs(title = "Early January Weather Temperature vs. Time")
+ggsave(filename = "HW1_problem1_plot.pdf")
 ```
 
 ## Problem 2
-```{r}
+Constructing the dataframe and taking the mean of each column 
+```{r constructing dataframe and calculating mean}
 p2_df = tibble(
   rs = rnorm(10, mean = 0, sd = 1),
   log = rs > 0,
@@ -37,7 +41,8 @@ mean(pull(p2_df, fac))
 ```
 Mean can be calculated from the random sample and the logical vector, but not the character or factor vector. 
 
-```{r, eval=FALSE}
+Converting the logical, character, and logical vector into numeric
+```{r converting into numeric, eval=FALSE}
 as.numeric(pull(p2_df, log))
 as.numeric(pull(p2_df, char))
 as.numeric(pull(p2_df, fac))
