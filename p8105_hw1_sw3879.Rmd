@@ -8,26 +8,33 @@ output: github_document
 
 Importing the moderndive tidyverse library 
 
-```{r loading libraries and data file}
+```{r loading libraries and data file, message=FALSE}
 library(moderndive)
 data("early_january_weather")
 library(tidyverse)
 ```
 The early January weather dataset contains `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns. 
-This dataset contains the following variables: `r names(early_january_weather)`
+
+This dataset contains the following variables: `r names(early_january_weather)`.
+
 By viewing this dataset, there are missing values in the wind_gust and pressure column that might impact later analyses. 
 
-The mean temperature is `r mean(pull(early_january_weather, temp))` #round this 
+The mean temperature is `r round(mean(pull(early_january_weather, temp)), digits = 2)` 
 
-```{r plotting}
+```{r plotting, message = FALSE}
 library(ggplot2)
 ggplot(early_january_weather, aes(x = hour, y = temp, color = humid)) + geom_point() + labs(title = "Early January Weather Temperature vs. Time")
 ggsave(filename = "HW1_problem1_plot.pdf")
 ```
+There are two patterns evidenced by the plot:
+
+1) From 0 to 5hr, temperature generally decreases and reaches the lowest point. From 5hr to 13hr, temperature generally increases and reaches the peak. Starting from 13-15hr, temperature drops again. 
+
+2) On days with higher humidity, temperature tends to be higher; on days with lower humidity, temperature tends to be lower. 
 
 ## Problem 2
 Constructing the dataframe and taking the mean of each column 
-```{r constructing dataframe and calculating mean}
+```{r constructing dataframe and calculating mean, message=FALSE}
 p2_df = tibble(
   rs = rnorm(10, mean = 0, sd = 1),
   log = rs > 0,
@@ -41,14 +48,14 @@ mean(pull(p2_df, fac))
 ```
 Mean can be calculated from the random sample and the logical vector, but not the character or factor vector. 
 
-Converting the logical, character, and logical vector into numeric
+Next, converting the logical, character, and logical vector into numeric
 ```{r converting into numeric, eval=FALSE}
 as.numeric(pull(p2_df, log))
 as.numeric(pull(p2_df, char))
 as.numeric(pull(p2_df, fac))
 ```
 
-The logical and factor vectors can be coerced into numeric format, but not the character vector. 
+The logical and factor vectors can be coerced into numeric format, but not the character vector. This is because the factor vector is assessed based on the alphabetical order for the first letter of each level, but this did not happen with the character vector. 
 
 
 
