@@ -6,20 +6,22 @@ output: github_document
 ---
 ## Problem 1
 
-Importing the moderndive tidyverse library 
+Importing the moderndive for Q1 and the tidyverse library for later use 
 
 ```{r loading libraries and data file, message=FALSE}
 library(moderndive)
 data("early_january_weather")
 library(tidyverse)
 ```
+Description of the dataset:
+
 The early January weather dataset contains `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns. 
 
 This dataset contains the following variables: `r names(early_january_weather)`.
 
-By viewing this dataset, there are missing values in the wind_gust and pressure column that might impact later analyses. 
+Most variables in this dataset have complete data, but there is a significant amount of missing values in the wind_gust variable, and a few missing data for the wind_dir and pressure variable that might impact later analyses. 
 
-The mean temperature is `r round(mean(pull(early_january_weather, temp)), digits = 2)` 
+The mean temperature is `r round(mean(pull(early_january_weather, temp)), digits = 2)`F. 
 
 ```{r plotting, message = FALSE}
 library(ggplot2)
@@ -28,7 +30,7 @@ ggsave(filename = "HW1_problem1_plot.pdf")
 ```
 There are two patterns evidenced by the plot:
 
-1) From 0 to 5hr, temperature generally decreases and reaches the lowest point. From 5hr to 13hr, temperature generally increases and reaches the peak. Starting from 13-15hr, temperature drops again. 
+1) From 0 to 5hr, temperature generally decreases and reaches the lowest point. From 5hr to 13hr, temperature generally increases and reaches the peak. Starting from 13-15hr, temperature drops again. The temperature typically ranges from 25 to 55 degree. 
 
 2) On days with higher humidity, temperature tends to be higher; on days with lower humidity, temperature tends to be lower. 
 
@@ -55,7 +57,7 @@ as.numeric(pull(p2_df, char))
 as.numeric(pull(p2_df, fac))
 ```
 
-The logical and factor vectors can be coerced into numeric format, but not the character vector. This is because the factor vector is assessed based on the alphabetical order for the first letter of each level, but this did not happen with the character vector. 
+The logical and factor vectors can be converted into numeric format, but not the character vector. This is because the factor vector is assessed based on the alphabetical order for the first letter of each level, but this did not happen with the character vector so NA is introduced. The logical vector is interpreted as True = 1 and False = 0, so it can also be converted to numeric. 
 
 
 
